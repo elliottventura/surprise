@@ -71,3 +71,39 @@ p {
     padding: 1rem 0.9rem;
   }
 }
+
+#countdown {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.countdown-item {
+  flex: 1;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.95);
+  border-radius: 10px;
+  padding: 0.6rem 0.4rem;
+  border: 1px solid rgba(148, 163, 184, 0.55);
+}
+
+.count-number {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.count-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+}
+
+#countdown-message {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #e5e7eb;
+}
+
