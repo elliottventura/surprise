@@ -42,3 +42,22 @@ function updateCountdown() {
 
 const countdownInterval = setInterval(updateCountdown, 1000);
 updateCountdown();
+
+// Configuration du sprite sheet
+// Suppose que tu as 8 tulipes, chacune de 64px de large, alignées horizontalement
+const tulipSprite = {
+  imageUrl: "images/tulipes-sprite.png",
+  frameWidth: 74,   // largeur d'une tulipe en px
+  frameHeight: 200,  // hauteur d'une tulipe en px
+  cols: 5,          // nombre de tulipes côte à côte
+  rows: 1           // nombre de lignes (1 si c'est une ligne, 2 si 2x4, etc.)
+};
+
+// Positions des tulipes (chaque entrée = [colonne, ligne])
+const tulipPositions = [
+  [0, 0], // tulipe 1
+  [1, 0], // tulipe 2
+  [2, 0], // tulipe 3
+  [3, 0], // tulipe 4
+  [4, 0], // tulipe 5
+];
