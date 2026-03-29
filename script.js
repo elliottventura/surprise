@@ -46,7 +46,7 @@ updateCountdown();
 // Configuration du sprite sheet
 // Suppose que tu as 8 tulipes, chacune de 64px de large, alignées horizontalement
 const tulipSprite = {
-  imageUrl: "images/tulipes-sprite.png",
+  imageUrl: "images/tulipeClosedAll_small.png",
   frameWidth: 74,   // largeur d'une tulipe en px
   frameHeight: 200,  // hauteur d'une tulipe en px
   cols: 5,          // nombre de tulipes côte à côte
