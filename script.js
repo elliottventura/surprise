@@ -1,5 +1,5 @@
-// Date cible : 19 avril de cette année à 09:00
-const targetDate = new Date(new Date().getFullYear(), 3, 19, 9, 0, 0).getTime();
+// Date cible : 12 avril de cette année à 09:00
+const targetDate = new Date(new Date().getFullYear(), 3, 12, 9, 0, 0).getTime();
 // (Mois en JS : 0 = janvier, donc 3 = avril)[web:60][web:67]
 
 const daysEl = document.getElementById("days");
