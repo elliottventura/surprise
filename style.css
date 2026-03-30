@@ -143,6 +143,8 @@ p {
   background-image: url("images/tulipeClosedAll_small.png");
   background-size: auto 200px;
   background-repeat: no-repeat;
+  overflow: hidden;
+  background-clip: content-box;
   animation: sway 3.5s ease-in-out infinite;
   transform-origin: bottom center;
 }
