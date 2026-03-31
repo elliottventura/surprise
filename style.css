@@ -168,16 +168,3 @@ p {
   75%  { transform: rotate(-1.2deg); }
   100% { transform: rotate(0deg); }
 }
-
-/* Responsive tulip garden height for smaller screens */
-@media (max-width: 768px) {
-  #tulip-garden {
-    height: 140px;
-  }
-}
-
-@media (max-width: 480px) {
-  #tulip-garden {
-    height: 120px;
-  }
-}
