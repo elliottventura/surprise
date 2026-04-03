@@ -26,14 +26,14 @@ const tulipPositions = [
   [4, 0],
 ];
 
-// Array that stores the chosen positions once and for all on load
-let assignedPositions = [];
+// Array that stores tulip data: { spriteColumn, row, left }
+let assignedTulips = [];
 
 function calcTulipCount(daysLeft) {
   const revealDays = 30;
-  const minTulips = 5;  // Start with 5 tulips
-  const maxTulips = 30; // Can go up to 30 tulips
-  
+  const minTulips = 10; // Start with 10 tulips
+  const maxTulips = 80; // Can go up to 80 tulips
+
   let factor;
   if (daysLeft >= revealDays) {
     factor = 0;
@@ -42,37 +42,15 @@ function calcTulipCount(daysLeft) {
   } else {
     factor = 1 - daysLeft / revealDays;
   }
-  
-  const targetCount = Math.round(minTulips + factor * (maxTulips - minTulips));
-  
-  // Ensure at least 10 tulips at 12 days or less
-  if (daysLeft <= 12 && targetCount < 10) {
-    return 10;
-  }
-  
-  return targetCount;
-}
 
-function getTulipDimensions(tulipCount) {
-  // Calculate tulip size based on how many need to fit
-  const screenWidth = window.innerWidth;
-  const gap = 2;
-  const padding = 8;
-  const availableWidth = screenWidth - padding;
-  
-  // Calculate width needed per tulip
-  const calculatedWidth = Math.floor((availableWidth - (tulipCount - 1) * gap) / tulipCount);
-  
-  // Constrain between min and max sizes
-  const minWidth = 30;  // Minimum tulip width
-  const maxWidth = 74;  // Original/maximum tulip width
-  
-  const width = Math.max(minWidth, Math.min(maxWidth, calculatedWidth));
-  
-  // Maintain aspect ratio (74:200)
-  const height = Math.round((width / 74) * 200);
-  
-  return { width, height };
+  const targetCount = Math.round(minTulips + factor * (maxTulips - minTulips));
+
+  // Ensure at least 20 tulips at 12 days or less
+  if (daysLeft <= 12 && targetCount < 20) {
+    return 20;
+  }
+
+  return targetCount;
 }
 
 function renderTulipGarden(daysLeft) {
@@ -80,33 +58,46 @@ function renderTulipGarden(daysLeft) {
 
   const newCount = calcTulipCount(daysLeft);
 
-  // On n'ajoute des tulipes que si le nombre augmente (jamais de reset)
-  if (newCount <= assignedPositions.length) return;
+  // Only add tulips if count increases (never reset)
+  if (newCount <= assignedTulips.length) return;
 
-  const dims = getTulipDimensions(newCount);
-  // Total sprite sheet width = frameWidth × number of columns
-  const spriteSheetWidth = dims.width * tulipSprite.cols;
+  const tulipWidth = 37;
+  const tulipHeight = 100;
+  const rowHeight = 50; // Space between rows (includes some overlap)
+  const gardenWidth = window.innerWidth;
+  const rows = 3;
 
-  for (let i = assignedPositions.length; i < newCount; i++) {
-    const randomPos =
-      tulipPositions[Math.floor(Math.random() * tulipPositions.length)];
-    assignedPositions.push(randomPos);
+  for (let i = assignedTulips.length; i < newCount; i++) {
+    // Random sprite column (0-4)
+    const spriteColumn = Math.floor(Math.random() * tulipPositions.length);
+
+    // Random row assignment (0, 1, 2)
+    const row = Math.floor(Math.random() * rows);
+
+    // Random left position within garden width (allowing overflow for natural field effect)
+    const maxLeft = gardenWidth;
+    const left = Math.random() * maxLeft;
+
+    assignedTulips.push({ spriteColumn, row, left });
 
     const tulip = document.createElement("div");
     tulip.className = "tulip";
-    
-    // Calculate background position and size based on tulip count
-    const offsetX = -randomPos[0] * dims.width;
+
+    // Set absolute positioning
+    tulip.style.left = `${left}px`;
+    tulip.style.bottom = `${row * rowHeight}px`; // Stack rows from bottom: row 0 at bottom, row 2 higher
+
+    // Z-index: back row (2) lowest, front row (0) highest
+    // Add small random variation for natural overlap sorting
+    const baseZIndex = (rows - 1 - row) * 100;
+    tulip.style.zIndex = baseZIndex + Math.floor(Math.random() * 10);
+
+    // Background position based on sprite column
+    const offsetX = -spriteColumn * tulipWidth;
     tulip.style.backgroundPosition = `${offsetX}px 0px`;
-    tulip.style.backgroundSize = `${spriteSheetWidth}px ${dims.height}px`;
-    tulip.style.width = `${dims.width}px`;
-    tulip.style.height = `${dims.height}px`;
-    
+
     tulipGarden.appendChild(tulip);
   }
-  
-  // Adjust garden height based on tulip size
-  tulipGarden.style.height = `${dims.height + 10}px`;
 }
 
 function updateCountdown() {
@@ -149,7 +140,7 @@ window.addEventListener("resize", () => {
   resizeTimeout = setTimeout(() => {
     // Clear existing tulips and recalculate with new dimensions
     tulipGarden.innerHTML = "";
-    assignedPositions = [];
+    assignedTulips = [];
     const now = new Date().getTime();
     const distance = targetDate - now;
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));

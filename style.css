@@ -14,7 +14,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 2rem 1.5rem 220px;
+  padding: 2rem 1.5rem 120px;
   position: relative;
   overflow-x: hidden;
 }
@@ -116,32 +116,27 @@ p {
   color: #1e3a5f;
 }
 
-/* Tulip garden — band at the bottom of the screen */
+/* Tulip garden — 3-row field at the bottom of the screen */
 #tulip-garden {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 210px;
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 2px;
+  height: 330px;
+  display: block;
   overflow: hidden;
-  z-index: 10;
+  z-index: 0;
   pointer-events: none;
-  padding: 0 4px;
 }
 
 /* Each tulip */
 .tulip {
-  width: 74px;
-  height: 200px;
-  flex-shrink: 0;
-  display: inline-block;
+  position: absolute;
+  width: 37px;
+  height: 100px;
+  bottom: 0;
   background-image: url("images/tulipeClosedAll_small.png");
-  background-size: 370px 200px; /* 5 frames × 74px = 370px total width */
+  background-size: 185px 100px; /* 5 frames × 37px = 185px total width (half size) */
   background-repeat: no-repeat;
   overflow: hidden;
   background-clip: content-box;
