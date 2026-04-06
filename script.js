@@ -177,3 +177,44 @@ window.addEventListener("resize", () => {
 // First immediate call, then every second
 updateCountdown();
 const countdownInterval = setInterval(updateCountdown, 1000);
+
+// Initialize random windmills
+function initializeRandomWindmills() {
+  const randomWindmills = document.querySelectorAll(".windmill-random");
+
+  // First pass: assign random sizes
+  const windmillSizes = [];
+  randomWindmills.forEach((windmill, index) => {
+    const size = Math.floor(Math.random() * (700 - 300 + 1)) + 300;
+    windmillSizes.push({ index, size, element: windmill });
+  });
+
+  // Sort by size to assign z-index: larger = higher z-index
+  windmillSizes.sort((a, b) => a.size - b.size);
+
+  // Second pass: apply sizes and random positions with z-index based on size
+  windmillSizes.forEach((item, sortIndex) => {
+    const { element, size } = item;
+
+    element.style.width = size + "px";
+    element.style.height = size + "px";
+
+    // Random position on the page
+    const maxX = window.innerWidth - size;
+    const minTop = window.innerHeight * 0.3; // Don't go higher than 30% from top
+    const maxTop = window.innerHeight - size;
+    const left = Math.floor(Math.random() * maxX);
+    const top = Math.floor(Math.random() * (maxTop - minTop)) + minTop;
+
+    element.style.left = left + "px";
+    element.style.top = top + "px";
+
+    // Z-index based on size order: smallest = -2, larger ones get higher index
+    element.style.zIndex = -2 + sortIndex;
+  });
+}
+
+initializeRandomWindmills();
+
+// Reinitialize on window resize
+window.addEventListener("resize", initializeRandomWindmills);

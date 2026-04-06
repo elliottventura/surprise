@@ -163,6 +163,40 @@ p {
   animation-delay: -1.2s;
 }
 
+/* Windmill — left background */
+.windmill {
+  position: fixed;
+  left: 20px;
+  bottom: 120px;
+  z-index: -1;
+  width: 756px;
+  height: 756px;
+}
+
+.windmill-base {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 1;
+}
+
+.windmill-wings {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 2;
+  animation: rotateWings 4s linear infinite;
+  transform-origin: 49.8% 44.92%;
+}
+
+/* Random windmills — styled by JavaScript */
+.windmill-random {
+  position: fixed;
+  z-index: -1;
+}
+
 /* Wind animation */
 @keyframes sway {
   0%   { transform: rotate(0deg); }
@@ -170,4 +204,10 @@ p {
   50%  { transform: rotate(1.8deg); }
   75%  { transform: rotate(-1.2deg); }
   100% { transform: rotate(0deg); }
+}
+
+/* Wings rotation animation */
+@keyframes rotateWings {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
